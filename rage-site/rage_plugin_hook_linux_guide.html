@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="A practical Linux guide to launching GTA V Legacy with RAGE Plugin Hook through Steam Proton using Protontricks.">
+<title>RAGE Plugin Hook on Linux — Setup Guide</title>
+<style>
+:root{--bg:#0a1019;--panel:#111c2b;--line:#26384f;--text:#edf4ff;--muted:#a9b8cb;--blue:#63a9ff;--cyan:#68e0e0;--green:#6de0a1;--amber:#ffd27a}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 75% -10%,#19375b 0,transparent 40%),var(--bg);color:var(--text);font:16px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:var(--cyan)}.wrap{width:min(1100px,calc(100% - 36px));margin:auto}header{padding:18px 0;border-bottom:1px solid #ffffff18;background:#09111ddd;position:sticky;top:0;z-index:5;backdrop-filter:blur(12px)}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:16px}.brand{font-weight:900;letter-spacing:.08em}.nav a{margin-left:16px;text-decoration:none;color:var(--muted);font-size:.9rem}
+.hero{padding:70px 0 42px}.eyebrow{color:var(--cyan);font-weight:800;letter-spacing:.15em;text-transform:uppercase;font-size:.78rem}.hero h1{font-size:clamp(2.6rem,6vw,4.7rem);line-height:1.05;letter-spacing:-.05em;margin:14px 0}.hero h1 span{color:var(--blue)}.hero p{color:var(--muted);max-width:730px;font-size:1.12rem}
+.btn{display:inline-block;margin:12px 8px 0 0;padding:10px 16px;border-radius:10px;background:linear-gradient(120deg,var(--blue),var(--cyan));color:#071321;text-decoration:none;font-weight:800}.btn.secondary{background:#14243a;color:var(--text);border:1px solid var(--line)}
+.notice{padding:16px 18px;border:1px solid #d8a64b66;background:#392b153d;border-radius:13px;color:#ffe5b0;margin:22px 0}.card{background:linear-gradient(180deg,#142238,#101a29);border:1px solid var(--line);border-radius:17px;padding:23px;margin:16px 0;box-shadow:0 18px 45px #0004}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}.span8{grid-column:span 8}.span4{grid-column:span 4}.span6{grid-column:span 6}.full{grid-column:1/-1}
+h2{font-size:1.65rem;letter-spacing:-.03em;margin:0 0 12px}h3{margin:18px 0 5px;font-size:1.08rem}.muted,li{color:var(--muted)}.tag{display:inline-block;color:#bcdcff;border:1px solid #3d5878;border-radius:999px;padding:3px 9px;font-size:.75rem;font-weight:800;margin-bottom:12px}
+ul{padding-left:22px}li{margin:6px 0}code{color:#d9e9ff;background:#08111d;padding:2px 5px;border-radius:5px}
+pre{background:#060c14;border:1px solid #26384b;border-radius:12px;padding:16px;overflow:auto;color:#d9e9ff;font:.85rem/1.6 ui-monospace,Consolas,monospace;white-space:pre}
+.codehead{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:15px}.copy{cursor:pointer;border:1px solid #45617e;background:#1a2b40;color:white;border-radius:9px;padding:7px 11px;font-weight:750}.tip{border-left:3px solid var(--blue);padding:10px 14px;background:#15263a;border-radius:0 10px 10px 0;color:#c8d9ed;margin-top:14px}
+.steps{counter-reset:n;display:grid;gap:12px}.step{counter-increment:n;position:relative;padding:15px 16px 15px 60px;background:#0c1725;border:1px solid var(--line);border-radius:12px}.step:before{content:counter(n);position:absolute;left:15px;top:15px;width:30px;height:30px;display:grid;place-items:center;border-radius:9px;background:#1e4166;font-weight:900}
+.checklist label{display:flex;gap:10px;padding:9px 0;color:var(--muted);border-bottom:1px solid #ffffff12}.checklist input{accent-color:#65d9bb;margin-top:6px}
+.toc{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}.toc a{padding:6px 10px;background:#14243a;border:1px solid var(--line);border-radius:8px;text-decoration:none;font-size:.85rem}
+footer{border-top:1px solid #ffffff18;margin-top:55px;padding:26px 0 42px;color:var(--muted);font-size:.88rem}
+@media(max-width:760px){.span8,.span4,.span6{grid-column:1/-1}.nav .links{display:none}.hero{padding:48px 0 28px}.card{padding:18px}}
+</style>
+</head>
+<body>
+<header><div class="wrap nav"><div class="brand">▰ LINUX RAGE HOOK GUIDE</div><div class="links"><a href="#requirements">Requirements</a><a href="#setup">Setup</a><a href="#win10">Windows 10</a><a href="#dotnet">.NET</a><a href="#launch">Launch</a><a href="/ai-support.html">AI Support</a></div></div></header>
+<main class="wrap">
+<section class="hero">
+<div class="eyebrow">GTA V Legacy · Steam · Proton</div>
+<h1>Run <span>RAGE Plugin Hook</span> on Linux.</h1>
+<p>A practical guide based on a working EndeavourOS + Steam + GE-Proton setup. It uses Protontricks to start <strong>RAGEPluginHook.exe</strong> inside the same compatibility prefix as your Steam copy of GTA V.</p>
+<a class="btn" href="#setup">Start setup ↓</a><a class="btn secondary" href="#launch">Jump to launch command</a>
+<div class="notice"><strong>Important:</strong> This is a community workaround, not an official RAGE Plugin Hook or Rockstar-supported Linux setup. Compatibility can change with GTA updates, Proton versions, RAGE Plugin Hook versions, and individual mods.</div>
+<div class="toc"><a href="#requirements">1. Requirements</a><a href="#paths">2. Check paths</a><a href="#setup">3. Install Protontricks</a><a href="#win10">3. Set Windows 10</a><a href="#dotnet">4. Download and install .NET</a><a href="#launch">5. Launch RAGE</a><a href="#play">6. Play</a><a href="#troubleshooting">7. Troubleshooting</a></div>
+</section>
+<section id="requirements" class="grid">
+<div class="card span8"><span class="tag">BEFORE YOU START</span><h2>Requirements</h2><ul>
+<li>A Linux desktop distribution (this example uses EndeavourOS).</li><li>Steam installed and working.</li><li><strong>GTA V Legacy</strong> installed through Steam. Steam AppID: <code>271590</code>.</li><li>A Proton compatibility tool selected for GTA V. The tested example uses <strong>GE-Proton11-1</strong>.</li><li>RAGE Plugin Hook installed in the GTA V game folder, with <code>RAGEPluginHook.exe</code> present.</li><li>Python 3 available on the system.</li></ul><div class="tip">Use the same Steam library, game installation, and compatibility prefix that you use for GTA V. Do not create a separate Wine prefix for this launch method.</div></div>
+<div class="card span4"><span class="tag">TESTED EXAMPLE PATHS</span><h2>Installation paths</h2><p class="muted">Change these if your installation differs.</p><p><b>Steam</b><br><code>/opt/games/Steam</code></p><p><b>GTA V folder</b><br><code>/opt/games/Steam/steamapps/common/Grand Theft Auto V</code></p><p><b>Proton prefix</b><br><code>/opt/games/Steam/steamapps/compatdata/271590</code></p><p><b>GE-Proton</b><br><code>/opt/games/Steam/compatibilitytools.d/GE-Proton11-1</code></p></div>
+</section>
+<section id="paths" class="card full"><span class="tag">STEP 1</span><h2>Confirm your installation paths</h2><p class="muted">Run this read-only check in a terminal.</p><div class="codehead"><b>Path verification</b><button class="copy" data-copy="paths-code">Copy</button></div>
+<pre id="paths-code">STEAM="/opt/games/Steam"
+GAME="$STEAM/steamapps/common/Grand Theft Auto V"
+PREFIX="$STEAM/steamapps/compatdata/271590"
+GE="$STEAM/compatibilitytools.d/GE-Proton11-1"
+
+echo "GTA V executable:"
+ls -l "$GAME/GTA5.exe"
+echo "RAGE Plugin Hook:"
+ls -l "$GAME/RAGEPluginHook.exe"
+echo "GE-Proton:"
+ls -ld "$GE"
+echo "Steam compatibility prefix:"
+ls -ld "$PREFIX/pfx"</pre><div class="tip">If a path is missing, stop and correct it before continuing. Your Steam library may be installed somewhere else.</div></section>
+<section id="setup" class="card full"><span class="tag">STEP 2</span><h2>Non-Sudo Install (Recommended)</h2><p class="muted">Recommended if you do not want to use sudo or change system packages. This creates a Python virtual environment in the GTA V folder, installs Protontricks there, and checks that it runs.</p><div class="codehead"><b>Install Protontricks locally without administrator access</b><button class="copy" data-copy="install-code">Copy</button></div>
+<pre id="install-code">cd "/opt/games/Steam/steamapps/common/Grand Theft Auto V" || exit 1
+
+export STEAM_DIR="/opt/games/Steam"
+export STEAM_COMPAT_DATA_PATH="/opt/games/Steam/steamapps/compatdata/271590"
+
+mkdir -p .tools || exit 1
+
+if [ ! -x .tools/protontricks/bin/python ]; then
+    python -m venv .tools/protontricks || exit 1
+fi
+
+.tools/protontricks/bin/python -m pip install --upgrade protontricks || exit 1
+
+echo "Checking Protontricks..."
+.tools/protontricks/bin/protontricks --version || exit 1</pre><div class="tip"><b>Why a virtual environment?</b> It keeps the Protontricks Python package inside the GTA V directory instead of changing system Python packages.</div>
+<div class="notice" style="margin-top:22px"><strong>Alternative: Sudo Install (System-Wide)</strong><p>Choose this if you want Protontricks installed for all users through your Linux distribution's package manager. The command below is for Arch Linux and EndeavourOS. It installs the distribution package system-wide and will ask for your administrator password.</p>
+<div class="codehead"><b>Install Protontricks system-wide (Arch / EndeavourOS)</b><button class="copy" data-copy="system-protontricks-code">Copy</button></div>
+<pre id="system-protontricks-code">sudo pacman -Syu protontricks
+
+echo "Checking system Protontricks..."
+protontricks --version</pre>
+<p><b>For other distributions:</b> install Protontricks using your distribution's supported package manager, then verify with <code>protontricks --version</code>. Package names and commands may differ.</p>
+<p><b>Important:</b> Do not run both installation methods unless you intentionally want two separate installations. Pick one method and use its Protontricks executable in the .NET and launch steps below.</p></div></section>
+<section id="win10" class="card full"><span class="tag">STEP 3</span><h2>Set the Wine prefix to Windows 10</h2>
+<p class="muted">Set the Windows version in the GTA V Steam Proton prefix—not in a separate Wine prefix. Close GTA V and RAGE Plugin Hook first. This updates the prefix registry setting used by Wine.</p>
+<div class="codehead"><b>Set Windows 10 in the GTA V prefix</b><button class="copy" data-copy="win10-code">Copy</button></div>
+<pre id="win10-code">STEAM="/opt/games/Steam"
+GE="$STEAM/compatibilitytools.d/GE-Proton11-1"
+PREFIX="$STEAM/steamapps/compatdata/271590/pfx"
+WINE="$GE/files/bin/wine"
+WINESERVER="$GE/files/bin/wineserver"
+
+export WINEPREFIX="$PREFIX"
+export WINE="$WINE"
+export WINESERVER="$WINESERVER"
+
+"$WINESERVER" -k 2>/dev/null
+"$WINE" reg add 'HKCU\Software\Wine' \
+  /v Version /t REG_SZ /d win10 /f
+
+"$WINE" reg query 'HKCU\Software\Wine' /v Version</pre>
+<div class="tip"><b>Expected result:</b> The registry query should show <code>Version    REG_SZ    win10</code>. This changes the Windows-version compatibility setting only; it does not install Windows or replace Proton. If you use a different Steam library or GE-Proton folder, update the paths.</div>
+</section>
+<section id="dotnet" class="card full"><span class="tag">STEP 4</span><h2>Download and install Microsoft .NET Framework 4.8</h2>
+<p class="muted">RAGE Plugin Hook is a .NET application. This step installs the .NET Framework 4.8 runtime into the same GTA V Proton prefix used by Steam. Do not install .NET into your Linux system or a different Wine prefix.</p>
+<p><b>Official Microsoft download:</b> <a href="https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48" target="_blank" rel="noopener">Download .NET Framework 4.8</a>. Choose the <b>Runtime</b> download, not the Developer Pack. Microsoft also provides an <a href="https://support.microsoft.com/en-us/servicing/dotnetframework/2019/10/microsoft-net-framework-4-8-offline-installer-for-windows" target="_blank" rel="noopener">offline installer</a>. <span class="muted">The Protontricks command below downloads the required installer automatically, so a separate manual download is normally unnecessary.</span></p>
+<div class="codehead"><b>Download and install .NET 4.8 in the GTA V prefix</b><button class="copy" data-copy="dotnet-code">Copy</button></div>
+<pre id="dotnet-code">STEAM="/opt/games/Steam"
+GAME="$STEAM/steamapps/common/Grand Theft Auto V"
+GE="$STEAM/compatibilitytools.d/GE-Proton11-1"
+
+export STEAM_DIR="$STEAM"
+export STEAM_COMPAT_DATA_PATH="$STEAM/steamapps/compatdata/271590"
+export WINEPREFIX="$STEAM_COMPAT_DATA_PATH/pfx"
+export WINE="$GE/files/bin/wine"
+export WINESERVER="$GE/files/bin/wineserver"
+export PATH="/opt/games/Steam/protontricks-work/bin:$PATH"
+
+cd "$GAME" || exit 1
+
+"$GAME/.tools/protontricks/bin/protontricks" \
+  --no-bwrap --no-runtime 271590 dotnet48</pre>
+<div class="notice" style="margin-top:18px"><strong>If you chose Sudo Install:</strong> use the system-wide Protontricks command instead of the local virtual-environment executable. Run this alternative .NET install command:</div>
+<div class="codehead"><b>.NET 4.8 using system-wide Protontricks</b><button class="copy" data-copy="dotnet-system-code">Copy</button></div>
+<pre id="dotnet-system-code">STEAM="/opt/games/Steam"
+GE="$STEAM/compatibilitytools.d/GE-Proton11-1"
+
+export STEAM_DIR="$STEAM"
+export STEAM_COMPAT_DATA_PATH="$STEAM/steamapps/compatdata/271590"
+export WINEPREFIX="$STEAM_COMPAT_DATA_PATH/pfx"
+export WINE="$GE/files/bin/wine"
+export WINESERVER="$GE/files/bin/wineserver"
+
+protontricks --no-bwrap --no-runtime 271590 dotnet48</pre>
+<div class="tip"><b>Important:</b> Close GTA V and RAGE before installing. Keep the terminal open and follow any installer prompts. This modifies the existing <code>compatdata/271590/pfx</code> prefix; it does not reinstall GTA V or delete your mods. If .NET 4.8 is already present, Protontricks may report that it is installed.</div>
+</section>
+<section id="launch" class="card full"><span class="tag">STEP 5</span><h2>Launch RAGE Plugin Hook</h2><p class="muted">After completing the .NET step above, use this launch method in the example setup. It uses Steam AppID <code>271590</code> and launches RAGE in the existing GTA V Proton prefix.</p><div class="codehead"><b>Working RAGE Plugin Hook launch command</b><button class="copy" data-copy="launch-code">Copy</button></div>
+<pre id="launch-code">cd "/opt/games/Steam/steamapps/common/Grand Theft Auto V" || exit 1
+
+export STEAM_DIR="/opt/games/Steam"
+export STEAM_COMPAT_DATA_PATH="/opt/games/Steam/steamapps/compatdata/271590"
+
+mkdir -p .tools || exit 1
+
+if [ ! -x .tools/protontricks/bin/python ]; then
+    python -m venv .tools/protontricks || exit 1
+fi
+
+.tools/protontricks/bin/python -m pip install protontricks || exit 1
+
+echo "Checking Protontricks..."
+.tools/protontricks/bin/protontricks --version || exit 1
+
+echo "Launching RAGE Plugin Hook..."
+.tools/protontricks/bin/protontricks-launch \
+    --appid 271590 \
+    --no-bwrap \
+    --no-runtime \
+    "$PWD/RAGEPluginHook.exe"</pre><div class="tip"><b>Keep the terminal open while RAGE starts.</b> If the launcher exits or displays an error, its terminal output can help identify the problem.</div></section>
+<div class="notice" style="margin-top:18px"><strong>If you chose Sudo Install:</strong> use this launch alternative, which calls the system-wide <code>protontricks-launch</code> command.</div>
+<div class="codehead"><b>Launch RAGE with system-wide Protontricks</b><button class="copy" data-copy="launch-system-code">Copy</button></div>
+<pre id="launch-system-code">cd "/opt/games/Steam/steamapps/common/Grand Theft Auto V" || exit 1
+
+export STEAM_DIR="/opt/games/Steam"
+export STEAM_COMPAT_DATA_PATH="/opt/games/Steam/steamapps/compatdata/271590"
+
+protontricks-launch --appid 271590 --no-bwrap --no-runtime "$PWD/RAGEPluginHook.exe"</pre>
+<section id="play" class="grid">
+<div class="card span6"><span class="tag">STEP 6</span><h2>Start playing</h2><div class="steps"><div class="step"><b>Wait for RAGE Plugin Hook</b><br><span class="muted">Allow RAGE to initialize and start GTA V. Do not start a second GTA V instance from Steam while this launch is in progress.</span></div><div class="step"><b>Load into Story Mode</b><br><span class="muted">For a typical LSPDFR setup, let GTA V finish loading into Story Mode before going on duty.</span></div><div class="step"><b>Verify your plugins</b><br><span class="muted">Check that your expected RAGE plugins and supporting mods load. Troubleshoot individual plugin failures separately.</span></div></div></div>
+<div class="card span6"><span class="tag">QUICK CHECKLIST</span><h2>Before each session</h2><div class="checklist"><label><input type="checkbox"> Steam is running and GTA V Legacy is installed.</label><label><input type="checkbox"> The selected Proton tool is installed.</label><label><input type="checkbox"> <code>RAGEPluginHook.exe</code> is in the GTA V root folder.</label><label><input type="checkbox"> The command uses Steam AppID <code>271590</code>.</label><label><input type="checkbox"> No other GTA V instance is already running.</label></div></div>
+</section>
+<section id="troubleshooting" class="card full"><span class="tag">TROUBLESHOOTING</span><h2>Common problems</h2>
+<h3>“No such file or directory”</h3><p class="muted">Your Steam or GTA V path differs from the example, or RAGE Plugin Hook is not installed in the GTA V root. Update the paths and confirm the executable exists.</p>
+<h3><code>protontricks-launch: command not found</code></h3><p class="muted">Run the installation command again. The launcher is invoked from <code>.tools/protontricks/bin/</code>, not from the system PATH.</p>
+<h3>Python virtual environment creation fails</h3><p class="muted">Make sure Python 3 and virtual-environment support are installed. Package names vary by distribution.</p>
+<h3>RAGE starts but GTA V does not</h3><p class="muted">Keep the terminal open and inspect its output. Confirm Steam is running, the AppID is correct, and the selected Proton version is installed. Avoid switching prefixes mid-troubleshooting.</p>
+<h3>Rockstar says Windows 7 or Windows 8 support has ended</h3><p class="muted">In the tested setup, setting Windows 10 in the actual Proton prefix resolved the warning. This is not required for every installation. Do not copy registry commands blindly: first confirm the correct prefix and back up registry settings.</p>
+<h3>A RAGE plugin or mod fails after the game starts</h3><p class="muted">This may be a plugin compatibility issue rather than a Protontricks launch issue. Test with the base RAGE setup, then add plugins back one at a time. Check each mod's GTA V build and RAGE Plugin Hook compatibility.</p>
+<div class="notice"><b>Do not delete your Proton prefix as a first troubleshooting step.</b> It can contain Rockstar Launcher data, settings, and dependencies. Back it up before attempting a prefix rebuild.</div></section>
+<section class="grid"><div class="card span6"><h2>What this guide does</h2><ul><li>Uses the existing Steam GTA V prefix.</li><li>Installs Protontricks into a local Python virtual environment.</li><li>Launches <code>RAGEPluginHook.exe</code> with Protontricks and AppID <code>271590</code>.</li><li>Uses <code>--no-bwrap</code> and <code>--no-runtime</code>, matching the tested command.</li></ul></div><div class="card span6"><h2>What this guide cannot guarantee</h2><ul><li>Every Linux distribution or Proton release will work.</li><li>Every RAGE plugin, LSPDFR plugin, or GTA V mod is Linux-compatible.</li><li>Online services or anti-cheat-protected modes will work.</li><li>Future GTA V updates will preserve compatibility.</li></ul></div></section>
+</main>
+
+<footer><div class="wrap"><b>Linux RAGE Plugin Hook Guide</b><p>Independent community guide. Not affiliated with Rockstar Games, Steam, Valve, or the RAGE Plugin Hook developers. GTA V, RAGE Plugin Hook, and related names belong to their respective owners.</p><p>Use mods and online services in accordance with each game's terms and the rules of the servers you join.</p></div></footer>
+<script>
+document.querySelectorAll('.copy').forEach(button=>button.addEventListener('click',async()=>{const el=document.getElementById(button.dataset.copy);try{await navigator.clipboard.writeText(el.innerText);button.textContent='Copied!';}catch(e){button.textContent='Select and copy';}setTimeout(()=>button.textContent='Copy',1800);}));
+
+</script>
+</body>
+</html>
